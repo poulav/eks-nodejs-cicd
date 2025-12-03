@@ -1,0 +1,24 @@
+{
+  "name": "eks-nodejs-cicd",
+  "version": "1.0.0",
+  "description": "This is a project for testing skills on EKS, CICD using Gitnub Actions",
+  "homepage": "https://github.com/poulav/eks-nodejs-cicd#readme",
+  "bugs": {
+    "url": "https://github.com/poulav/eks-nodejs-cicd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poulav/eks-nodejs-cicd.git"
+  },
+  "license": "ISC",
+  "author": "Poulav Biswas",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
