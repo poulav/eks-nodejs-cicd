@@ -1,4 +1,4 @@
-FROM node:iron-alpine3.22
+FROM node:22.21-alpine
 
 WORKDIR /app
 
