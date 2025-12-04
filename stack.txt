@@ -1,0 +1,32 @@
+[
+    {
+        "OutputKey": "PrivateSubnetIds",
+        "OutputValue": "subnet-088640f8aa83df552,subnet-0ebac6bf98d4ecd82",
+        "Description": "Private Subnet IDs (for nodes)",
+        "ExportName": "eks-private-stack-PrivateSubnetIds"
+    },
+    {
+        "OutputKey": "PublicSubnetIds",
+        "OutputValue": "subnet-0fc751bccd5de8a63,subnet-0585f20c0eb589b17",
+        "Description": "Public Subnet IDs (for ALB)",
+        "ExportName": "eks-private-stack-PublicSubnetIds"
+    },
+    {
+        "OutputKey": "VpcId",
+        "OutputValue": "vpc-09e6d9566a4fc2dd8",
+        "Description": "VPC ID",
+        "ExportName": "eks-private-stack-VpcId"
+    },
+    {
+        "OutputKey": "ClusterName",
+        "OutputValue": "my-private-eks",
+        "Description": "EKS Cluster Name",
+        "ExportName": "eks-private-stack-ClusterName"
+    },
+    {
+        "OutputKey": "ECRRepositoryUri",
+        "OutputValue": "280544871972.dkr.ecr.ap-south-1.amazonaws.com/eks-nodejs-app",
+        "Description": "ECR Repository URI",
+        "ExportName": "eks-private-stack-ECRRepositoryUri"
+    }
+]
