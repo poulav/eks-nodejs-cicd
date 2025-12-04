@@ -5,15 +5,12 @@ Parameters:
   ClusterName:
     Type: String
     Default: eks-private-stack
-  NodeInstanceType:
-    Type: String
-    Default: t3.medium
   NodeCount:
     Type: Number
     Default: 2
   VpcCidr:
     Type: String
-    Default: 10.0.0.0/16
+    Default: 12.0.0.0/16
 
 Resources:
   # VPC
@@ -32,7 +29,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: !Select [0, !Split [",", !Sub "${VpcCidr},10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"]]
+      CidrBlock: 12.0.1.0/24
       AvailabilityZone: !Select [0, !GetAZs '']
       MapPublicIpOnLaunch: true
       Tags:
@@ -45,7 +42,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: !Select [1, !Split [",", !Sub "${VpcCidr},10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"]]
+      CidrBlock: 12.0.2.0/24
       AvailabilityZone: !Select [1, !GetAZs '']
       MapPublicIpOnLaunch: true
       Tags:
@@ -59,7 +56,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: !Select [2, !Split [",", !Sub "${VpcCidr},10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"]]
+      CidrBlock: 12.0.3.0/24
       AvailabilityZone: !Select [0, !GetAZs '']
       Tags:
         - Key: Name
@@ -73,7 +70,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: !Select [3, !Split [",", !Sub "${VpcCidr},10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"]]
+      CidrBlock: 12.0.4.0/24
       AvailabilityZone: !Select [1, !GetAZs '']
       Tags:
         - Key: Name
@@ -214,19 +211,18 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
-        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
 
   # EKS NodeGroup (private subnets only)
   EKSNodeGroup:
     Type: AWS::EKS::Nodegroup
+    DependsOn:
+      - EKSCluster
     Properties:
-      ClusterName: !Ref ClusterName
+      ClusterName: !Ref EKSCluster
       NodeRole: !GetAtt EKSNodeRole.Arn
       Subnets:
         - !Ref PrivateSubnet1
         - !Ref PrivateSubnet2
-      InstanceTypes:
-        - !Ref NodeInstanceType
       ScalingConfig:
         MinSize: !Ref NodeCount
         DesiredSize: !Ref NodeCount
@@ -234,8 +230,7 @@ Resources:
       UpdateConfig:
         MaxUnavailable: 1
       Tags:
-        - Key: Name
-          Value: !Sub ${ClusterName}-nodes
+        Name: !Sub ${ClusterName}-nodes
 
   # ECR Repository
   ECRRepository:
