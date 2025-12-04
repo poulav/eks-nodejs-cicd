@@ -2,7 +2,7 @@ FROM node:22.21-alpine
 
 WORKDIR /app
 
-COPY .k8s /app/k8s
+COPY k8s /app/k8s
 COPY package*.json ./
 RUN npm ci --only=production
 
